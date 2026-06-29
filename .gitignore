@@ -4,3 +4,25 @@
 *.ptx
 *.cubin
 *.fatbin
+
+# Build artifacts
+*.o
+*.obj
+*.a
+*.so
+*.ptx
+*.cubin
+*.fatbin
+*.d
+
+# Compiled test executables
+kernels/tests/kernels_test
+blas/tests/sgemm_test
+blas/tests/bgemm_test
+kernels/reduction/unified_reduce_standalone
+
+# Editor / OS
+.vscode/
+.clangd
+.DS_Store
+__pycache__/
