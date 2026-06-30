@@ -1,9 +1,9 @@
-# Blu-Kernels
+# HyperKernels
 
 **A complete set of hand-written, high-performance CUDA kernels for transformer
 training on NVIDIA RTX 6000 Ada Lovelace (`sm_89`).**
 
-Blu-Kernels covers the whole training step - attention, LayerNorm, GELU,
+HyperKernels covers the whole training step - attention, LayerNorm, GELU,
 cross-entropy, the optimizer update, *and* the batched GEMMs underneath them as
 standalone CUDA kernels tuned for Ada's 4th-gen tensor cores and built with CUDA 13.0.
 Every kernel is a self-contained extraction: its device-side dependency closure is
@@ -90,7 +90,7 @@ the deep-pipeline configs raise the dynamic shared-memory cap to exceed 48 KB.
 ## Repo layout
 
 ```
-Blu-Kernels/
+HyperKernels/
 ├── kernels/                compute kernels (attention, layernorm, gelu, loss, optimizer, reduction)
 │   ├── attention/  layernorm/  gelu/  loss/  optimizer/  reduction/
 │   └── tests/              kernels_test.cu correctness harness + Makefile
