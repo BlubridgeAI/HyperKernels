@@ -1,0 +1,37 @@
+name: HyperKernels CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-and-compile:
+    name: Compile Kernels (${{ matrix.arch }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        arch: [sm_89]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up CUDA Toolkit
+        uses: Jimver/cuda-toolkit@v0.2.19
+        with:
+          cuda-version: '12.4.1'
+          method: 'network'
+
+      - name: Verify NVCC installation
+        run: |
+          nvcc --version
+
+      - name: Build Compute Kernels
+        run: |
+          make -C kernels/tests all ARCH=${{ matrix.arch }}
+
+      - name: Build BLAS Kernels
+        run: |
+          make -C blas/tests all ARCH=${{ matrix.arch }}

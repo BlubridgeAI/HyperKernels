@@ -108,12 +108,15 @@ built-in correctness test.
 ## Quick start
 
 ```bash
-# Compute kernels — builds, links, and runs the correctness harness
-cd kernels/tests && make run
+# Build all compute kernels and BLAS harnesses
+make
 
-# BLAS — FP32 + BF16 harnesses
-cd blas/tests && make run        # both
-make run-bf16                    # bf16 only
+# Run all test harnesses
+make test
+
+# Or run individual component harnesses
+make test-kernels
+make test-blas
 ```
 
 Build for a different architecture with `make ARCH=sm_90` (etc.). For the individual
@@ -150,13 +153,11 @@ DRAM peak).
 | Attention backward (causal)     | 16×12×1024×64 | 2.66 ms | 24.5 | **1.51×** |
 | Attention backward (non-causal) | 16×12×1024×64 | 5.68 ms | 22.7 | **1.15×** |
 
-<!-- TODO: add image -->
 <p align="center">
   <img src="assets/attention_forward.png" alt="Attention forward: TFLOP/s and latency vs PyTorch SDPA" width="80%">
   <br><em>Attention forward: latency vs PyTorch SDPA.</em>
 </p>
 
-<!-- TODO: add image -->
 <p align="center">
   <img src="assets/attention_backward.png" alt="Attention backward: TFLOP/s and latency vs PyTorch SDPA" width="80%">
   <br><em>Attention backward: latency vs PyTorch SDPA.</em>
@@ -179,10 +180,14 @@ PyTorch by up to **1.56×**; the gap widens at the large, compute-bound sizes (u
 **1.39× over cuBLAS** at 8×4096). The smallest 16×256 case is launch/occupancy-bound
 and is the one shape still behind cuBLAS.
 
-<!-- TODO: add image -->
 <p align="center">
   <img src="assets/bf16_a.png" alt="Batched BF16 GEMM TFLOP/s: BluBLAS vs cuBLAS vs PyTorch across square sizes" width="80%">
   <br><em>Batched BF16 GEMM throughput (TFLOP/s) vs cuBLAS and PyTorch across square sizes.</em>
+</p>
+
+<p align="center">
+  <img src="assets/bf16_b.png" alt="Batched BF16 GEMM Performance Profile" width="80%">
+  <br><em>Batched BF16 GEMM execution profile and speedup breakdown vs vendor libraries.</em>
 </p>
 
 **Memory-bound — DRAM (peak 960 GB/s)**
@@ -202,7 +207,6 @@ The fused, compute-bound kernels (cross-entropy and attention) deliver the large
 speedups. The simple memory-bound kernels run at **81–91 % of the DRAM speed-of-light**
  at the roofline there is no headroom left, so matching PyTorch there *is* the result.
 
-<!-- TODO: add image -->
 <p align="center">
   <img src="assets/cross_entropy.png" alt="Cross-entropy forward/backward: memory bandwidth and latency vs PyTorch" width="80%">
   <br><em>Sparse cross-entropy: latency vs PyTorch.</em>

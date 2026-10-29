@@ -1,28 +1,34 @@
+# Intermediate compiler artifacts
 *.i
 *.ii
 *.gpu
 *.ptx
 *.cubin
 *.fatbin
+*.d
 
-# Build artifacts
+# Build artifacts and libraries
 *.o
 *.obj
 *.a
 *.so
-*.ptx
-*.cubin
-*.fatbin
-*.d
+*.dylib
+*.dll
 
-# Compiled test executables
+# Compiled test and probe executables
 kernels/tests/kernels_test
+kernels/reduction/unified_reduce_standalone
 blas/tests/sgemm_test
 blas/tests/bgemm_test
-kernels/reduction/unified_reduce_standalone
+blas/tests/probe_nn*
+blas/tests/test_*
+bin/
+build/
 
-# Editor / OS
+# Editor / OS / IDE
 .vscode/
-.clangd
+.clangd/
 .DS_Store
 __pycache__/
+*.swp
+*.swo
